@@ -1,8 +1,10 @@
 package com.docsconsole.tutorials.resources;
 
 
-import com.docsconsole.tutorials.model.Customer;
-import com.docsconsole.tutorials.service.CustomerService;
+import com.docsconsole.tutorials.model.CustomerDetails;
+import com.docsconsole.tutorials.model.ProductDetails;
+import com.docsconsole.tutorials.model.response.CustomerProductDetails;
+import com.docsconsole.tutorials.service.CustomerDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,48 +16,54 @@ import java.net.URI;
 public class RestTemplateClientController {
 
     @Autowired
-    CustomerService customerService;
+    CustomerDetailsService CustomerDetailsService;
 
-    @GetMapping(value = "/customer")
-    public ResponseEntity getCustomers() {
-        String customers = customerService.getCustomers();
-        return ResponseEntity.ok(customers);
-
-    }
-    @GetMapping(value = "/customer/{id}")
-    public ResponseEntity getCustomer(@PathVariable Long id) {
-        Customer customer = customerService.getCustomer(id);
-        return ResponseEntity.ok(customer);
+    @GetMapping(value = "/customerDetails")
+    public ResponseEntity getCustomerDetails() {
+        String customerDetails = CustomerDetailsService.getCustomerDetails();
+        return ResponseEntity.ok(customerDetails);
 
     }
-    @GetMapping(value = "/getForEntity/customer/{id}")
-    public ResponseEntity getCustomerUsingGetForEntity(@PathVariable Long id) {
-        return customerService.getCustomerUsingGetForEntity(id);
+    @GetMapping(value = "/customerDetails/{id}")
+    public ResponseEntity getCustomerDetails(@PathVariable Long id) {
+        CustomerDetails CustomerDetails = CustomerDetailsService.getCustomerDetails(id);
+        return ResponseEntity.ok(CustomerDetails);
+
+    }
+    @GetMapping(value = "/getForEntity/customerDetails/{id}")
+    public ResponseEntity getCustomerDetailsUsingGetForEntity(@PathVariable Long id) {
+        return CustomerDetailsService.getCustomerDetailsUsingGetForEntity(id);
     }
 
-    @PostMapping(value = "/postForEntity/customer")
-    public ResponseEntity createCustomerUsingPostForEntity(@RequestBody Customer customer) {
-        Customer resultedCustomer = customerService.createCustomerUsingPostForEntity(customer);
-        return ResponseEntity.created(URI.create("/customer/" + customer.getId())).body(resultedCustomer);
+    @PostMapping(value = "/postForEntity/customerDetails")
+    public ResponseEntity createCustomerDetailsUsingPostForEntity(@RequestBody CustomerDetails CustomerDetails) {
+        CustomerDetails resultedCustomerDetails = CustomerDetailsService.createCustomerDetailsUsingPostForEntity(CustomerDetails);
+        return ResponseEntity.created(URI.create("/CustomerDetails/" + CustomerDetails.getId())).body(resultedCustomerDetails);
     }
-    @PostMapping(value = "/postForObject/customer")
-    public ResponseEntity createCustomerUsingPostForObject(@RequestBody Customer customer) {
-        Customer resultedCustomer = customerService.createCustomerUsingPostForObject(customer);
-        return ResponseEntity.ok(resultedCustomer);
+    @PostMapping(value = "/postForObject/customerDetails")
+    public ResponseEntity createCustomerDetailsUsingPostForObject(@RequestBody CustomerDetails CustomerDetails) {
+        CustomerDetails customerDetails = CustomerDetailsService.createCustomerDetailsUsingPostForObject(CustomerDetails);
+        return ResponseEntity.ok(customerDetails);
     }
-    @PutMapping(value = "/customer")
-    public ResponseEntity PutCustomer(@RequestBody Customer customer) {
-        customerService.putCustomer(customer);
+    @PostMapping(value = "/postForObject/order/{customerDetailsId}/{customerDetailsFirstName}")
+    public ResponseEntity createOrderAndUpdateCustomerDetails(@PathVariable Long customerDetailsId,@PathVariable String customerDetailsFirstName,@RequestBody ProductDetails productDetails) {
+        CustomerProductDetails resultedCustomerDetails = CustomerDetailsService.createOrderAndUpdateCustomerDetails(customerDetailsId,customerDetailsFirstName,productDetails);
+        return ResponseEntity.ok(resultedCustomerDetails);
+    }
+
+    @PutMapping(value = "/customerDetails")
+    public ResponseEntity PutCustomerDetails(@RequestBody CustomerDetails customerDetails) {
+        CustomerDetailsService.putCustomerDetails(customerDetails);
         return ResponseEntity.noContent().build();
     }
-    @DeleteMapping(value = "/customer/{id}")
-    public ResponseEntity deleteCustomer(@PathVariable Long id) {
-        customerService.deleteCustomer(id);
+    @DeleteMapping(value = "/customerDetails/{id}")
+    public ResponseEntity deleteCustomerDetails(@PathVariable Long id) {
+        CustomerDetailsService.deleteCustomerDetails(id);
         return ResponseEntity.noContent().build();
     }
-    @PostMapping(value = "/exchange/customer")
-    public ResponseEntity createCustomerUsingExchange(@RequestBody Customer customer) {
-        Customer resultedCustomer = customerService.createCustomerUsingExchange(customer);
-        return ResponseEntity.created(URI.create("customer/" + customer.getId())).body(resultedCustomer);
+    @PostMapping(value = "/exchange/customerDetails")
+    public ResponseEntity createCustomerDetailsUsingExchange(@RequestBody CustomerDetails CustomerDetails) {
+        CustomerDetails resultedCustomerDetails = CustomerDetailsService.createCustomerDetailsUsingExchange(CustomerDetails);
+        return ResponseEntity.created(URI.create("CustomerDetails/" + CustomerDetails.getId())).body(resultedCustomerDetails);
     }
 }

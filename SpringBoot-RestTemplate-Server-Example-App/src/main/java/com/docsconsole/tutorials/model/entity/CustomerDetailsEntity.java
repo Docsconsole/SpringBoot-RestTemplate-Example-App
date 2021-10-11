@@ -1,4 +1,4 @@
-package com.docsconsole.tutorials.model;
+package com.docsconsole.tutorials.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,16 +6,24 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
-@Table(name = "customer",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = "ID")
-        })
+@Table(name = "CUSTOMER_DETAILS",
+        uniqueConstraints = { @UniqueConstraint(columnNames = "ID") })
 @Getter
 @Setter
-public class Customer {
+public class CustomerDetailsEntity
+{
+
+    public CustomerDetailsEntity(String firstName, String lastName, String email, Long contactNumber){
+        this.firstName = firstName;
+        this.lastName =  lastName;
+        this.email = email;
+        this.contactNumber = contactNumber;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,5 +48,8 @@ public class Customer {
     @NotBlank
     @Column(name = "CONTACT_NUM")
     private Long contactNumber;
+
+    @OneToMany(mappedBy = "customerDetailsEntity", cascade = CascadeType.ALL )
+    private List<ProductDetailsEntity> productDetailsEntityList =new ArrayList<>();
 
 }
