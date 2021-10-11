@@ -40,7 +40,6 @@ public class CustomerDetailsService {
         Map<String, Object> requestMap = new HashMap();
         requestMap.put("customerDetailsId", customerDetailsId);
         requestMap.put("customerDetailsFirstName", customerDetailsFirstName);
-
         return restTemplate.postForObject("http://localhost:8082/customerDetailsApp/api/order/{customerId}/{customerFirstName}", productDetails, CustomerProductDetails.class,requestMap);
     }
     public CustomerDetails createCustomerDetailsUsingPostForEntity(CustomerDetails customerDetails) {
