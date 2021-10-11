@@ -32,36 +32,36 @@ public class CustomerDetailsController {
     }
 
     @PostMapping(value = "/customerDetails")
-    public ResponseEntity<?> createCustomer(@RequestBody CustomerDetails customerDetails) {
+    public ResponseEntity<?> createCustomerDetails(@RequestBody CustomerDetails customerDetails) {
         CustomerDetails customerDetailsResults = customerDetailsServiceImpl.createCustomerDetails(customerDetails);
         return ResponseEntity.created(URI.create("/customer-app/api/customer/" + customerDetails.getId())).body(customerDetailsResults);
     }
     @PostMapping(value = "/order/{customerId}/{customerFirstName}")
-    public ResponseEntity<?> createOrderAndUpdateCustomer(@PathVariable Long customerId,@PathVariable String customerFirstName,@RequestBody ProductDetailsEntity productDetailsEntity) {
-        CustomerProductDetails resultedCustomerProductDetails = customerDetailsServiceImpl.createOrderAndUpdateCustomer(customerId,customerFirstName, productDetailsEntity);
+    public ResponseEntity<?> createOrderAndUpdateCustomerDetails(@PathVariable Long customerId,@PathVariable String customerFirstName,@RequestBody ProductDetailsEntity productDetailsEntity) {
+        CustomerProductDetails resultedCustomerProductDetails = customerDetailsServiceImpl.createOrderAndUpdateCustomerDetails(customerId,customerFirstName, productDetailsEntity);
         return ResponseEntity.created(URI.create("/customer-app/api/customer/" + resultedCustomerProductDetails.getCustomerDetailsEntity().getId())).body(resultedCustomerProductDetails);
     }
 
     @PutMapping(value = "/customerDetails")
-    public ResponseEntity<?> updateCustomer(@RequestBody CustomerDetailsEntity customerDetailsEntity) {
+    public ResponseEntity<?> updateCustomerDetails(@RequestBody CustomerDetailsEntity customerDetailsEntity) {
         CustomerDetailsEntity resultedCustomerDetailsEntity = customerDetailsServiceImpl.updateCustomer(customerDetailsEntity);
         return ResponseEntity.created(URI.create("/customer-app/api/customer/" + customerDetailsEntity.getId())).body(resultedCustomerDetailsEntity);
     }
     @PutMapping(value = "/customerDetails/{id}/{firstName}")
-    public ResponseEntity<?> updateCustomer(@PathVariable Long id,@PathVariable String firstName) {
+    public ResponseEntity<?> updateCustomerDetails(@PathVariable Long id,@PathVariable String firstName) {
         CustomerDetailsEntity resultedCustomerDetailsEntity = customerDetailsServiceImpl.updateCustomer(id,firstName);
         return ResponseEntity.created(URI.create("/customer-app/api/customer/" + id)).body(resultedCustomerDetailsEntity);
     }
 
     @DeleteMapping(value = "/customerDetails/{id}")
-    public ResponseEntity<?> deleteCustomer(@PathVariable Long id) {
+    public ResponseEntity<?> deleteCustomerDetails(@PathVariable Long id) {
         customerDetailsServiceImpl.deleteCustomer(id);
         return ResponseEntity.noContent().build();
 
     }
 
     @PatchMapping(value = "/customerDetails")
-    public ResponseEntity<?> patchCustomer(@RequestBody CustomerDetailsEntity customerDetailsEntity) {
+    public ResponseEntity<?> patchCustomerDetails(@RequestBody CustomerDetailsEntity customerDetailsEntity) {
         CustomerDetailsEntity resultedCustomerDetailsEntity = customerDetailsServiceImpl.patchCustomer(customerDetailsEntity);
         return ResponseEntity.ok(resultedCustomerDetailsEntity);
     }

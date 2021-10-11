@@ -50,7 +50,7 @@ public class CustomerDetailsServiceImpl {
 
 
     }
-    public CustomerProductDetails createOrderAndUpdateCustomer(Long customerId,String customerFirstName,@RequestBody ProductDetailsEntity productDetailsEntity) {
+    public CustomerProductDetails createOrderAndUpdateCustomerDetails(Long customerId, String customerFirstName, @RequestBody ProductDetailsEntity productDetailsEntity) {
         CustomerDetailsEntity resultedCustomerDetailsEntity = customerDetailsRepository.findById(customerId).orElseThrow(() -> new EntityNotFoundException("CustomerDetailsEntity not found with id: " + customerId));
         resultedCustomerDetailsEntity.setFirstName(customerFirstName);
         customerDetailsRepository.save(resultedCustomerDetailsEntity);
