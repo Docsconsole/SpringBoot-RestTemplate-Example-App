@@ -19,17 +19,23 @@ public class RestTemplateClientController {
     CustomerDetailsService CustomerDetailsService;
 
     @GetMapping(value = "/customerDetails")
-    public ResponseEntity getCustomerDetails() {
-        String customerDetails = CustomerDetailsService.getCustomerDetails();
+    public ResponseEntity getCustomerDetailsUsingExchange() {
+        String customerDetails = CustomerDetailsService.getCustomerDetailsUsingExchange();
         return ResponseEntity.ok(customerDetails);
-
     }
-    @GetMapping(value = "/customerDetails/{id}")
-    public ResponseEntity getCustomerDetails(@PathVariable Long id) {
-        CustomerDetails CustomerDetails = CustomerDetailsService.getCustomerDetails(id);
+
+    @GetMapping(value = "/getForObject/customerDetails")
+    public ResponseEntity getCustomerDetailsUsingGetForObject(@RequestParam Long id) {
+        CustomerDetails CustomerDetails = CustomerDetailsService.getCustomerDetailsUsingGetForObject(id);
         return ResponseEntity.ok(CustomerDetails);
-
     }
+
+    @GetMapping(value = "/getForObject/customerDetails/{id}")
+    public ResponseEntity getCustomerDetailsUsingGetForObjectWithURIVars(@PathVariable Long id) {
+        CustomerDetails CustomerDetails = CustomerDetailsService.getCustomerDetailsUsingGetForObjectWithURIVars(id);
+        return ResponseEntity.ok(CustomerDetails);
+    }
+
     @GetMapping(value = "/getForEntity/customerDetails/{id}")
     public ResponseEntity getCustomerDetailsUsingGetForEntity(@PathVariable Long id) {
         return CustomerDetailsService.getCustomerDetailsUsingGetForEntity(id);
@@ -40,11 +46,13 @@ public class RestTemplateClientController {
         CustomerDetails resultedCustomerDetails = CustomerDetailsService.createCustomerDetailsUsingPostForEntity(CustomerDetails);
         return ResponseEntity.created(URI.create("/CustomerDetails/" + CustomerDetails.getId())).body(resultedCustomerDetails);
     }
+
     @PostMapping(value = "/postForObject/customerDetails")
     public ResponseEntity createCustomerDetailsUsingPostForObject(@RequestBody CustomerDetails CustomerDetails) {
         CustomerDetails customerDetails = CustomerDetailsService.createCustomerDetailsUsingPostForObject(CustomerDetails);
         return ResponseEntity.ok(customerDetails);
     }
+
     @PostMapping(value = "/postForObject/order/{customerDetailsId}/{customerDetailsFirstName}")
     public ResponseEntity createOrderAndUpdateCustomerDetails(@PathVariable Long customerDetailsId,@PathVariable String customerDetailsFirstName,@RequestBody ProductDetails productDetails) {
         CustomerProductDetails resultedCustomerDetails = CustomerDetailsService.createOrderAndUpdateCustomerDetails(customerDetailsId,customerDetailsFirstName,productDetails);
@@ -56,11 +64,13 @@ public class RestTemplateClientController {
         CustomerDetailsService.putCustomerDetails(customerDetails);
         return ResponseEntity.noContent().build();
     }
+
     @DeleteMapping(value = "/customerDetails/{id}")
     public ResponseEntity deleteCustomerDetails(@PathVariable Long id) {
         CustomerDetailsService.deleteCustomerDetails(id);
         return ResponseEntity.noContent().build();
     }
+
     @PostMapping(value = "/exchange/customerDetails")
     public ResponseEntity createCustomerDetailsUsingExchange(@RequestBody CustomerDetails CustomerDetails) {
         CustomerDetails resultedCustomerDetails = CustomerDetailsService.createCustomerDetailsUsingExchange(CustomerDetails);

@@ -17,6 +17,9 @@ import java.util.List;
 @Setter
 public class CustomerDetailsEntity
 {
+    public CustomerDetailsEntity(){
+        super();
+    }
 
     public CustomerDetailsEntity(String firstName, String lastName, String email, Long contactNumber){
         this.firstName = firstName;

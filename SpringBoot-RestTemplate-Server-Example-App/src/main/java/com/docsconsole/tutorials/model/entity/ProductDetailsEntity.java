@@ -16,6 +16,11 @@ import javax.validation.constraints.Size;
 public class ProductDetailsEntity
 {
 
+    public ProductDetailsEntity(){
+        super();
+    }
+
+
     public ProductDetailsEntity(String productName, String productVendorName, CustomerDetailsEntity customerDetailsEntity){
         this.productName = productName;
         this.productVendorName =  productVendorName;

@@ -17,14 +17,20 @@ public class CustomerDetailsService {
     @Autowired(required = true)
     public RestTemplate restTemplate;
 
-    public String getCustomerDetails() {
+    public String getCustomerDetailsUsingExchange() {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<String>(headers);
         return restTemplate.exchange("http://localhost:8082/customerDetailsApp/api/customerDetails", HttpMethod.GET, entity, String.class).getBody();
     }
-    public CustomerDetails getCustomerDetails(Long id) {
+    public CustomerDetails getCustomerDetailsUsingGetForObject(Long id) {
+
         return restTemplate.getForObject("http://localhost:8082/customerDetailsApp/api/customerDetails/"+id, CustomerDetails.class);
+    }
+    public CustomerDetails getCustomerDetailsUsingGetForObjectWithURIVars(Long id) {
+        Map<String, Object> requestMap = new HashMap();
+        requestMap.put("id", id);
+        return restTemplate.getForObject("http://localhost:8082/customerDetailsApp/api/customerDetails/{id}", CustomerDetails.class,requestMap);
     }
     public ResponseEntity<CustomerDetails> getCustomerDetailsUsingGetForEntity(Long id) {
         Map<String, Object> requestMap = new HashMap();
