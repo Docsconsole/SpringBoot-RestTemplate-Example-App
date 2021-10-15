@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,13 +31,18 @@ public class CustomerDetailsServiceImpl {
         return new CustomerDetails(customerDetailsEntity);
 
     }
+    public CustomerDetails findByIdAndByFirstName(Long id,String firstName) throws ExecutionException, InterruptedException {
+        Future<CustomerDetailsEntity> customerDetailsEntityFuture = customerDetailsRepository.findByIdAndByFirstName(id,firstName);
+        CustomerDetailsEntity customerDetailsEntity =  customerDetailsEntityFuture.get();
+        return new CustomerDetails(customerDetailsEntity);
+
+    }
 
     public List<CustomerDetails> getCustomerDetails() {
         List<CustomerDetailsEntity> customerDetailsEntityList = customerDetailsRepository.findAll();
         List<CustomerDetails> CustomerDetailList = customerDetailsEntityList.stream()
-                .map(ce -> new CustomerDetails(ce)).collect(Collectors.toList());
-        return CustomerDetailList;
-
+                .map(ce -> new CustomerDetails(ce,false)).collect(Collectors.toList());
+          return CustomerDetailList;
     }
 
     public CustomerDetails createCustomerDetails(CustomerDetails customerDetails) {
@@ -50,7 +57,7 @@ public class CustomerDetailsServiceImpl {
 
 
     }
-    public CustomerProductDetails createOrderAndUpdateCustomerDetails(Long customerId, String customerFirstName, @RequestBody ProductDetailsEntity productDetailsEntity) {
+    public CustomerProductDetails createProductAndUpdateCustomerDetails(Long customerId, String customerFirstName, @RequestBody ProductDetailsEntity productDetailsEntity) {
         CustomerDetailsEntity resultedCustomerDetailsEntity = customerDetailsRepository.findById(customerId).orElseThrow(() -> new EntityNotFoundException("CustomerDetailsEntity not found with id: " + customerId));
         resultedCustomerDetailsEntity.setFirstName(customerFirstName);
         customerDetailsRepository.save(resultedCustomerDetailsEntity);

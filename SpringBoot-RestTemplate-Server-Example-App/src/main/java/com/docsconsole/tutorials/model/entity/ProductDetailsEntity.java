@@ -36,7 +36,7 @@ public class ProductDetailsEntity
     @Column(name = "PRODUCT_NAME")
     private String productName;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "CUSTOMER_ID",nullable = false)
     private CustomerDetailsEntity customerDetailsEntity;
 

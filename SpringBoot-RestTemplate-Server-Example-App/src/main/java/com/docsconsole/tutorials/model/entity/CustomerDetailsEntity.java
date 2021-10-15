@@ -52,7 +52,7 @@ public class CustomerDetailsEntity
     @Column(name = "CONTACT_NUM")
     private Long contactNumber;
 
-    @OneToMany(mappedBy = "customerDetailsEntity", cascade = CascadeType.ALL )
+    @OneToMany(mappedBy = "customerDetailsEntity", cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
     private List<ProductDetailsEntity> productDetailsEntityList =new ArrayList<>();
 
 }

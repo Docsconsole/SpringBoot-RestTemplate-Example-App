@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/customerDetailsApp/api")
@@ -25,6 +26,12 @@ public class CustomerDetailsController {
         return ResponseEntity.ok(customerDetails);
     }
 
+    @GetMapping("/customerDetails/{id}/{firstName}")
+    public ResponseEntity<?> getCustomerDetailsByIdAndFirstName(@PathVariable Long id,@PathVariable String firstName) throws ExecutionException, InterruptedException {
+        CustomerDetails customerDetails = customerDetailsServiceImpl.findByIdAndByFirstName(id,firstName);
+        return ResponseEntity.ok(customerDetails);
+    }
+
     @GetMapping("/customerDetails")
     public ResponseEntity<?> getCustomerDetails() {
         List<CustomerDetails> CustomerDetailList = customerDetailsServiceImpl.getCustomerDetails();
@@ -36,9 +43,15 @@ public class CustomerDetailsController {
         CustomerDetails customerDetailsResults = customerDetailsServiceImpl.createCustomerDetails(customerDetails);
         return ResponseEntity.created(URI.create("/customer-app/api/customer/" + customerDetails.getId())).body(customerDetailsResults);
     }
-    @PostMapping(value = "/order/{customerId}/{customerFirstName}")
+    @PostMapping(value = "/customerDetails/product/{customerId}/{customerFirstName}")
     public ResponseEntity<?> createOrderAndUpdateCustomerDetails(@PathVariable Long customerId,@PathVariable String customerFirstName,@RequestBody ProductDetailsEntity productDetailsEntity) {
-        CustomerProductDetails resultedCustomerProductDetails = customerDetailsServiceImpl.createOrderAndUpdateCustomerDetails(customerId,customerFirstName, productDetailsEntity);
+        CustomerProductDetails resultedCustomerProductDetails = customerDetailsServiceImpl.createProductAndUpdateCustomerDetails(customerId,customerFirstName, productDetailsEntity);
+        return ResponseEntity.created(URI.create("/customer-app/api/customer/" + resultedCustomerProductDetails.getCustomerDetailsEntity().getId())).body(resultedCustomerProductDetails);
+    }
+
+    @GetMapping(value = "/customerDetails/product/{customerId}/{customerFirstName}")
+    public ResponseEntity<?> createProductAndUpdateCustomerDetails(@PathVariable Long customerId,@PathVariable String customerFirstName,@RequestBody ProductDetailsEntity productDetailsEntity) {
+        CustomerProductDetails resultedCustomerProductDetails = customerDetailsServiceImpl.createProductAndUpdateCustomerDetails(customerId,customerFirstName, productDetailsEntity);
         return ResponseEntity.created(URI.create("/customer-app/api/customer/" + resultedCustomerProductDetails.getCustomerDetailsEntity().getId())).body(resultedCustomerProductDetails);
     }
 

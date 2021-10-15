@@ -40,4 +40,12 @@ public class CustomerDetails
         this.contactNumber = entity.getContactNumber();
         this.productDetailList = entity.getProductDetailsEntityList().stream().map(e -> new ProductDetails(e.getId(),e.getProductName(),e.getProductVendorName())).collect(Collectors.toList());
     }
+    public CustomerDetails(CustomerDetailsEntity entity,boolean isChildFetchRequired) {
+        this.id = entity.getId();
+        this.firstName = entity.getFirstName();
+        this.lastName = entity.getLastName();
+        this.email = entity.getEmail();
+        this.contactNumber = entity.getContactNumber();
+        //this.productDetailList = entity.getProductDetailsEntityList().stream().map(e -> new ProductDetails(e.getId(),e.getProductName(),e.getProductVendorName())).collect(Collectors.toList());
+    }
 }
