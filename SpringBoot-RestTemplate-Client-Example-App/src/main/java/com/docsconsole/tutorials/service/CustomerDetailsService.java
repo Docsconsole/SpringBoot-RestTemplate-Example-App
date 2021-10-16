@@ -8,6 +8,8 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -22,75 +24,86 @@ public class CustomerDetailsService {
     public RestTemplate restTemplate;
 
 
-    public CustomerDetails getCustomerDetailsUsingGetForObject(Long id) {
-        return restTemplate.getForObject("http://localhost:8082/customerDetailsApp/api/customerDetails/" + id, CustomerDetails.class);
+    //get:Using GetForObject
+    public List<CustomerDetails> getCustDetailsUsingGetForObject() {
+        return restTemplate.getForObject("http://localhost:8082/restTemplateServer/api/customerDetails", List.class);
     }
 
-    public CustomerDetails getCustomerDetailsUsingGetForObjectWithURIVars(Long id) {
+    //get:Using GetForObject With Request Params
+    public CustomerDetails getCustDetailsUsingGetForObject1(Long id) {
+        return restTemplate.getForObject("http://localhost:8082/restTemplateServer/api/customerDetails/" + id, CustomerDetails.class);
+    }
+    //get:Using GetForObject with Parameters
+    public CustomerDetails getCustDetailsGetForObject(Long id) {
         Map<String, Object> requestMap = new HashMap();
         requestMap.put("id", id);
-        return restTemplate.getForObject("http://localhost:8082/customerDetailsApp/api/customerDetails/{id}", CustomerDetails.class, requestMap);
+        return restTemplate.getForObject("http://localhost:8082/restTemplateServer/api/customerDetails/{id}", CustomerDetails.class, requestMap);
     }
-
-    public ResponseEntity<CustomerDetails> getCustomerDetailsUsingGetForEntity(Long id) {
+    //get:Using GetForEntity with Params
+    public ResponseEntity<CustomerDetails> getCustDetailsGetForEntity(Long id) {
         Map<String, Object> requestMap = new HashMap();
         requestMap.put("id", id);
-        return restTemplate.getForEntity("http://localhost:8082/customerDetailsApp/api/customerDetails/{id}", CustomerDetails.class, requestMap);
+        return restTemplate.getForEntity("http://localhost:8082/restTemplateServer/api/customerDetails/{id}", CustomerDetails.class, requestMap);
+    }
+    //post:Using PostForObject
+    public CustomerDetails createCustDetailsPostForObject(CustomerDetails customerDetails) {
+        return restTemplate.postForObject("http://localhost:8082/restTemplateServer/api/customerDetails", customerDetails, CustomerDetails.class);
     }
 
-    public CustomerDetails createCustomerDetailsUsingPostForObject(CustomerDetails customerDetails) {
-        return restTemplate.postForObject("http://localhost:8082/customerDetailsApp/api/customerDetails", customerDetails, CustomerDetails.class);
-    }
-
-    public CustomerProductDetails createOrderAndUpdateCustomerDetails(Long customerDetailsId, String customerDetailsFirstName, ProductDetails productDetails) {
+    //post:Using PostForObject with Params
+    public CustomerDetails createProductAndUpdateCustDetails(Long id, String firstName, ProductDetails productDetails) {
         Map<String, Object> requestMap = new HashMap();
-        requestMap.put("customerDetailsId", customerDetailsId);
-        requestMap.put("customerDetailsFirstName", customerDetailsFirstName);
-        return restTemplate.postForObject("http://localhost:8082/customerDetailsApp/api/customerDetails/product/{customerId}/{customerFirstName}}", productDetails, CustomerProductDetails.class, requestMap);
+        requestMap.put("id", id);
+        requestMap.put("firstName", firstName);
+        return restTemplate.postForObject("http://localhost:8082/restTemplateServer/api/customerDetails/product/{id}/{firstName}", productDetails, CustomerDetails.class, requestMap);
     }
 
-    public CustomerDetails createCustomerDetailsUsingPostForEntity(CustomerDetails customerDetails) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        HttpEntity<String> entity = new HttpEntity<>(headers);
-        return restTemplate.postForEntity("http://localhost:8082/customerDetailsApp/api/customerDetails", customerDetails, CustomerDetails.class).getBody();
+    //post:Using PostForEntity without Params
+    public CustomerDetails createCustDetailsPostForEntity(CustomerDetails customerDetails) {
+        return restTemplate.postForEntity("http://localhost:8082/restTemplateServer/api/customerDetails", customerDetails, CustomerDetails.class).getBody();
     }
-
-    public void putCustomerDetails(CustomerDetails customerDetails) {
-        restTemplate.put("http://localhost:8082/customerDetailsApp/api/customerDetails", customerDetails);
+    //put:Using Put
+    public void putCustDetails(CustomerDetails customerDetails) {
+        restTemplate.put("http://localhost:8082/restTemplateServer/api/customerDetails", customerDetails);
     }
-
-    public void deleteCustomerDetails(Long id) {
+    //delete:Using Delete
+    public void deleteCustDetails(Long id) {
         Map<String, Object> map = new HashMap();
         map.put("id", id);
-        restTemplate.delete("http://localhost:8082/customerDetailsApp/api/customerDetails/{id}", map);
+        restTemplate.delete("http://localhost:8082/restTemplateServer/api/customerDetails/{id}", map);
     }
 
+    //get:Using RequestEntity with Params and Headers
+    public CustomerDetails getCustomerDetExchangeRequestEntity1(Long id, String firstName) throws URISyntaxException {
 
-    public List<CustomerDetails> getCustomerDetailsUsingExchangeRequestEntity() throws URISyntaxException {
-        String url = "http://localhost:8082/customerDetailsApp/api/customerDetails";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        RequestEntity requestEntity = new RequestEntity(headers, HttpMethod.GET, new URI(url));
-        return restTemplate.exchange(requestEntity, List.class).getBody();
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        map.put("firstName", firstName);
+        URI uri = UriComponentsBuilder.newInstance().scheme("http").host("localhost").port(8082)
+                .path("restTemplateServer/api/customerDetails/{id}/{firstName}").buildAndExpand(map).toUri();
+        RequestEntity requestEntity = new RequestEntity(headers, HttpMethod.GET, uri);
+        return restTemplate.exchange(requestEntity, CustomerDetails.class).getBody();
     }
 
-
-    public CustomerDetails getCustomerDetailsExchangeHttpEntityURIVars(Long id, String firstName) {
-        String url = "http://localhost:8082/customerDetailsApp/api/customerDetails/{id}/{firstName}";
+    //get:Using HttpEntity with Params, Headers
+    public CustomerDetails getCustDetailsExchangeHttpEntity1(Long id, String firstName) {
+        String url = "http://localhost:8082/restTemplateServer/api/customerDetails/{id}/{firstName}";
         Map<String, Object> map = new HashMap<>();
         map.put("id", id);
         map.put("firstName", firstName);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        HttpEntity<String> entity = new HttpEntity<String>(headers);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
         return restTemplate.exchange(url, HttpMethod.GET, entity, CustomerDetails.class, map).getBody();
     }
 
-    public CustomerDetails getCustomerDetailsUsingExchangeHttpEntityURIVarsTypeRef(Long id, String firstName) {
-        String url = "http://localhost:8082/customerDetailsApp/api/customerDetails/{id}/{firstName}";
+    //get:Using HttpEntity with Params, Headers and With ParameterizedTypeReference
+    public CustomerDetails getCustomerDetailsExchangeHttpEntity2(Long id, String firstName) {
+        String url = "http://localhost:8082/restTemplateServer/api/customerDetails/{id}/{firstName}";
         Map<String, Object> map = new HashMap<>();
         map.put("id", id);
         map.put("firstName", firstName);
@@ -102,40 +115,58 @@ public class CustomerDetailsService {
         return restTemplate.exchange(url, HttpMethod.GET, entity, typeRef, map).getBody();
     }
 
-    public CustomerDetails CreateCustomerDetailsUsingExchangeRequestEntityUriVars(ProductDetails productDetails, Long id, String firstName) throws URISyntaxException {
-        String url = "http://localhost:8082/customerDetailsApp/api/customerDetails/{id}/{firstName}";
+
+    //post:Using RequestEntity without Params and Headers
+    public CustomerDetails createCustDetailsExchangeRequestEntity(CustomerDetails customerDetails) throws URISyntaxException {
+        String url = "http://localhost:8082/restTemplateServer/api/customerDetails";
+        RequestEntity requestEntity = new RequestEntity(customerDetails, HttpMethod.POST, new URI(url));
+        return restTemplate.exchange(requestEntity, CustomerDetails.class).getBody();
+    }
+
+    //post:Using RequestEntity With Parameters and Headers
+    public CustomerDetails createCustDetailsExchangeRequestEntity1(ProductDetails productDetails, Long id, String firstName) throws URISyntaxException {
+
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         Map<String, Object> map = new HashMap<>();
         map.put("id", id);
         map.put("firstName", firstName);
-        RequestEntity requestEntity = new RequestEntity(productDetails, HttpMethod.POST, new URI(url));
-        return restTemplate.exchange(url, HttpMethod.GET, requestEntity, CustomerDetails.class, map).getBody();
-    }
-
-    public CustomerDetails getCustomerDetailsUsingExchangeHttpEntityTypeRef(Long id, String firstName) {
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        String url = "http://localhost:8082/customerDetailsApp/api/customerDetails/{id}/{firstName}";
-        HttpEntity<?> httpEntity = new HttpEntity<>(headers);
-        ParameterizedTypeReference<CustomerDetails> typeRef = new ParameterizedTypeReference<>() {};
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<CustomerDetails> responseEntity = restTemplate.exchange(url, HttpMethod.GET, httpEntity, typeRef, id, firstName);
-        return responseEntity.getBody();
-
-    }
-
-    public CustomerDetails CreateCustomerDetailsUsingExchangeRequestEntity(CustomerDetails customerDetails) throws URISyntaxException {
-        String url = "http://localhost:8082/customerDetailsApp/api/customerDetails";
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        RequestEntity requestEntity = new RequestEntity(customerDetails, HttpMethod.POST, new URI(url));
+        URI uri = UriComponentsBuilder.newInstance().scheme("http").host("localhost").port(8082)
+                .path("restTemplateServer/api/customerDetails/product/{id}/{firstName}").buildAndExpand(map).toUri();
+        RequestEntity requestEntity = new RequestEntity(productDetails, HttpMethod.POST, uri);
         return restTemplate.exchange(requestEntity, CustomerDetails.class).getBody();
     }
 
-    public CustomerDetails createCustomerDetailsUsingExchangeWithHttpEntityEntity(CustomerDetails customerDetails) {
-        return restTemplate.exchange("http://localhost:8082/customerDetailsApp/api/customerDetails", HttpMethod.GET, new HttpEntity<CustomerDetails>(customerDetails), CustomerDetails.class).getBody();
+    //post:Using RequestEntity With Parameters, Headers and With ParameterizedTypeReference
+    public CustomerDetails createCustDetailsExchangeRequestEntity2(ProductDetails productDetails, Long id, String firstName) throws URISyntaxException {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        map.put("firstName", firstName);
+        ParameterizedTypeReference<CustomerDetails> typeRef = new ParameterizedTypeReference<>() {};
+        URI uri = UriComponentsBuilder.newInstance().scheme("http").host("localhost").port(8082)
+                .path("restTemplateServer/api/customerDetails/product/{id}/{firstName}").buildAndExpand(map).toUri();
+        RequestEntity requestEntity = new RequestEntity(productDetails, HttpMethod.POST, uri);
+        return restTemplate.exchange( requestEntity, typeRef).getBody();
     }
 
+    //post:Using HttpEntity Without Parameters and Headers
+    public CustomerDetails createCustDetailsExchangeHttpEntity1(CustomerDetails customerDetails) {
+        return restTemplate.exchange("http://localhost:8082/restTemplateServer/api/customerDetails", HttpMethod.POST, new HttpEntity<>(customerDetails), CustomerDetails.class).getBody();
+    }
+
+
+    //post:Using HttpEntity Without Request Parameters and Headers
+    public CustomerDetails createCustDetailsExchangeHttpEntity2(ProductDetails productDetails, Long id, String firstName) {
+        String url = "http://localhost:8082/restTemplateServer/api/customerDetails/product/{id}/{firstName}";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        map.put("firstName", firstName);
+        HttpEntity<ProductDetails> httpEntity = new HttpEntity<>(productDetails,headers);
+        return restTemplate.exchange(url, HttpMethod.POST, httpEntity, CustomerDetails.class,map).getBody();
+    }
 }

@@ -4,6 +4,7 @@ import com.docsconsole.tutorials.exception.EntityNotFoundException;
 import com.docsconsole.tutorials.model.entity.CustomerDetailsEntity;
 import com.docsconsole.tutorials.model.entity.ProductDetailsEntity;
 import com.docsconsole.tutorials.model.request.CustomerDetails;
+import com.docsconsole.tutorials.model.request.ProductDetails;
 import com.docsconsole.tutorials.model.response.CustomerProductDetails;
 import com.docsconsole.tutorials.repository.CustomerDetailsRepository;
 import com.docsconsole.tutorials.repository.ProductDetailsRepository;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
@@ -57,18 +59,18 @@ public class CustomerDetailsServiceImpl {
 
 
     }
-    public CustomerProductDetails createProductAndUpdateCustomerDetails(Long customerId, String customerFirstName, @RequestBody ProductDetailsEntity productDetailsEntity) {
-        CustomerDetailsEntity resultedCustomerDetailsEntity = customerDetailsRepository.findById(customerId).orElseThrow(() -> new EntityNotFoundException("CustomerDetailsEntity not found with id: " + customerId));
-        resultedCustomerDetailsEntity.setFirstName(customerFirstName);
+    public CustomerDetails createProductAndUpdateCustomerDetails(Long id, String firstName, ProductDetails productDetails) {
+        CustomerDetailsEntity resultedCustomerDetailsEntity = customerDetailsRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("CustomerDetailsEntity not found with id: " + id));
+        resultedCustomerDetailsEntity.setFirstName(firstName);
         customerDetailsRepository.save(resultedCustomerDetailsEntity);
+        ProductDetailsEntity productDetailsEntity = new ProductDetailsEntity(productDetails);
         productDetailsEntity.setCustomerDetailsEntity(resultedCustomerDetailsEntity);
         ProductDetailsEntity resultedProductDetailsEntity = productDetailsRepository.save(productDetailsEntity);
-        CustomerProductDetails CustomerProductDetails = new CustomerProductDetails(resultedCustomerDetailsEntity, resultedProductDetailsEntity);
-        return CustomerProductDetails;
+        resultedCustomerDetailsEntity.getProductDetailsEntityList().add(resultedProductDetailsEntity);
+        CustomerDetails customerDetails = new CustomerDetails(resultedCustomerDetailsEntity);
+        return customerDetails;
 
     }
-
-
 
     public CustomerDetailsEntity updateCustomer(CustomerDetailsEntity customerDetailsEntity) {
         CustomerDetailsEntity resultedCustomerDetailsEntity = customerDetailsRepository.save(customerDetailsEntity);

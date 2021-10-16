@@ -48,4 +48,5 @@ public class CustomerDetails
         this.contactNumber = entity.getContactNumber();
         //this.productDetailList = entity.getProductDetailsEntityList().stream().map(e -> new ProductDetails(e.getId(),e.getProductName(),e.getProductVendorName())).collect(Collectors.toList());
     }
+
 }

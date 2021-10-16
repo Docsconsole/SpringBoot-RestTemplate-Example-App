@@ -1,5 +1,6 @@
 package com.docsconsole.tutorials.model.entity;
 
+import com.docsconsole.tutorials.model.request.ProductDetails;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +21,10 @@ public class ProductDetailsEntity
         super();
     }
 
-
+    public ProductDetailsEntity(ProductDetails productDetails){
+        this.productName = productDetails.getProductName();
+        this.productVendorName =  productDetails.getProductVendorName();
+    }
     public ProductDetailsEntity(String productName, String productVendorName, CustomerDetailsEntity customerDetailsEntity){
         this.productName = productName;
         this.productVendorName =  productVendorName;
