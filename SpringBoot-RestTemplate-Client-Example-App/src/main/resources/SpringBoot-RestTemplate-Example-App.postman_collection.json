@@ -1,0 +1,540 @@
+{
+	"info": {
+		"_postman_id": "1ad6a4f2-4f17-436e-a410-8a65492bdd7a",
+		"name": "SpringBoot-RestTemplate-Example-App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "exchange-get",
+			"item": [
+				{
+					"name": "getAllCustomersUsingExchange",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/restTemplateClient/customerDetails/exchange/requestEntity",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restTemplateClient",
+								"customerDetails",
+								"exchange",
+								"requestEntity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCustomerDetailsExchangeHttpEntityURIVars",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/restTemplateClient/exchange/httpEntity/uriVars/customerDetails/53/Amar53",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restTemplateClient",
+								"exchange",
+								"httpEntity",
+								"uriVars",
+								"customerDetails",
+								"53",
+								"Amar53"
+							]
+						},
+						"description": "getCustomer1\r\n"
+					},
+					"response": []
+				},
+				{
+					"name": "getCustomerDetailsUsingExchangeHttpEntityURIVarsTypeRef",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/restTemplateClient/exchange/httpEntity/uriVars/typeRef/customerDetails/53/Amar53",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restTemplateClient",
+								"exchange",
+								"httpEntity",
+								"uriVars",
+								"typeRef",
+								"customerDetails",
+								"53",
+								"Amar53"
+							]
+						},
+						"description": "getCustomer1\r\n"
+					},
+					"response": []
+				},
+				{
+					"name": "getCustomerDetailsUsingExchangeRequestEntityWithParamsAndHeaderss",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/restTemplateClient/customerDetails//exchange/requestEntity1/57/Amar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restTemplateClient",
+								"customerDetails",
+								"",
+								"exchange",
+								"requestEntity1",
+								"57",
+								"Amar"
+							]
+						},
+						"description": "getCustomer1\r\n"
+					},
+					"response": []
+				},
+				{
+					"name": "createCustomerUsingExchange",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \"firstName\": \"Amar\",\r\n    \"lastName\": \"Sivas\",\r\n    \"email\": \"test.b19@gmail.com\",\r\n    \"contactNumber\": 8123456677,\r\n    \"productDetailList\": [\r\n        {\r\n\r\n            \"productName\": \"Amar\",\r\n            \"productVendorName\": \"Amar\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/restTemplate/exchange/customer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restTemplate",
+								"exchange",
+								"customer"
+							]
+						},
+						"description": "getCustomer1\r\n"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "getForObject",
+			"item": [
+				{
+					"name": "getCustomerusingGetForObjectWithQueryParam",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/restTemplateClient/customerDetails/getForObject/50",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restTemplateClient",
+								"customerDetails",
+								"getForObject",
+								"50"
+							]
+						},
+						"description": "getCustomer1\r\n"
+					},
+					"response": []
+				},
+				{
+					"name": "getCustomerGetForObjectWithOutRequestParams",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/restTemplateClient/customerDetails/all/getForObject",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restTemplateClient",
+								"customerDetails",
+								"all",
+								"getForObject"
+							]
+						},
+						"description": "getCustomer1\r\n"
+					},
+					"response": []
+				},
+				{
+					"name": "getCustomerGetForObjectWithRequestParams",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/restTemplateClient/customerDetails/getForObject/55",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restTemplateClient",
+								"customerDetails",
+								"getForObject",
+								"55"
+							]
+						},
+						"description": "getCustomer1\r\n"
+					},
+					"response": []
+				},
+				{
+					"name": "getCustomerusingGetForObjectWithReqParam",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/restTemplateClient/getForObject/customerDetails?id=50",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restTemplateClient",
+								"getForObject",
+								"customerDetails"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "50"
+								}
+							]
+						},
+						"description": "getCustomer1\r\n"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "getForEntity",
+			"item": [
+				{
+					"name": "getCustomerusingGetForEntity",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/restTemplateClient/customer/15",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restTemplateClient",
+								"customer",
+								"15"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "postForEntity",
+			"item": [
+				{
+					"name": "createCustomerUsingPostEntity",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \"firstName\": \"Amar\",\r\n    \"lastName\": \"Sivas\",\r\n    \"email\": \"amarsivas@gmail.com\",\r\n    \"contactNumber\": 8123456677,\r\n    \"productDetailList\": [\r\n        {\r\n\r\n            \"productName\": \"SampleProduct\",\r\n            \"productVendorName\": \"sampleVendro\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/restTemplateClient/customerDetails/postForEntity",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restTemplateClient",
+								"customerDetails",
+								"postForEntity"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "postForObject",
+			"item": [
+				{
+					"name": "createCustomerUsingPostObject",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \"firstName\": \"Amar55\",\r\n    \"lastName\": \"Sivas55\",\r\n    \"email\": \"amarsivas@gmail.com\",\r\n    \"contactNumber\": 8123456677,\r\n    \"productDetailList\": [\r\n        {\r\n\r\n            \"productName\": \"prodcut21\",\r\n            \"productVendorName\": \"vendor1\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/restTemplateClient/customerDetails/postForObject",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restTemplateClient",
+								"customerDetails",
+								"postForObject"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createCustomerUsingPostForObjectWithRequestParams",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productName\": \"prodcut26\",\r\n    \"productVendorName\": \"vendor26\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/restTemplateClient/customerDetails/postForObject/55/Amar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restTemplateClient",
+								"customerDetails",
+								"postForObject",
+								"55",
+								"Amar"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "exchange-post",
+			"item": [
+				{
+					"name": "ExchangeWithQueryParametersAndHeaders ( RequestEntity )",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productName\": \"prodcut\",\r\n    \"productVendorName\": \"vendor\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/restTemplateClient/customerDetails//exchange/requestEntity1/55/test",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restTemplateClient",
+								"customerDetails",
+								"",
+								"exchange",
+								"requestEntity1",
+								"55",
+								"test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExchangeWithQueryParametersAndHeadersAndTypeRef ( RequestEntity ) Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productName\": \"prodcut\",\r\n    \"productVendorName\": \"vendor\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/restTemplateClient/customerDetails/exchange/requestEntity2/55/test",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restTemplateClient",
+								"customerDetails",
+								"exchange",
+								"requestEntity2",
+								"55",
+								"test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExchangeWithQueryParametersAndHeaders ( HttpEntity)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productName\": \"prodcut\",\r\n    \"productVendorName\": \"vendor\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/restTemplateClient/customerDetails/exchange/httpEntity2/55/test",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restTemplateClient",
+								"customerDetails",
+								"exchange",
+								"httpEntity2",
+								"55",
+								"test"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "createOrUpdateCustomerUsingPut",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 20,\r\n    \"firstName\": \"Amar21\",\r\n    \"lastName\": \"Sivas21\",\r\n    \"email\": \"amarsivas.b19@gmail.com\",\r\n    \"contactNumber\": 8123456677\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/restTemplateClient/customer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"restTemplateClient",
+						"customer"
+					]
+				},
+				"description": "getCustomer1\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "deleteCustomerUsingDelete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/restTemplateClient/customer/18",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"restTemplateClient",
+						"customer",
+						"18"
+					]
+				},
+				"description": "getCustomer1\r\n"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
